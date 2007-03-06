@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project>
+  <extend>${base.project.dir}/base-dependencies.xml</extend>
+  <pomVersion>3</pomVersion>
+  <name>Icelandic Public Key Infrastructure Module</name>
+  <artifactId>is.idega.block.pki</artifactId>
+  <currentVersion>1.0</currentVersion>
+  <inceptionYear>2007</inceptionYear>
+  <shortDescription>Public Key Infrastructure - for authentication with private certificates</shortDescription>
+  <branches/>
+  <developers>
+    <developer>
+      <name>Tryggvi Larusson</name>
+      <id>tryggvil</id>
+      <email>tryggvi@idega.is</email>
+      <organization>idega software</organization>
+      <roles/>
+    </developer>
+  </developers>
+  <dependencies>
+    <dependency>
+      <groupId>bundles</groupId>
+      <artifactId>com.idega.core</artifactId>
+      <version>3.1.39</version>
+      <type>jar</type>
+      <url>http://www.idega.com/</url>
+      <properties>
+        <eclipse.dependency>true</eclipse.dependency>
+      </properties>
+    </dependency>
+    <dependency>
+      <groupId>bundles</groupId>
+      <artifactId>com.idega.block.login</artifactId>
+      <version>3.1.2</version>
+      <type>jar</type>
+      <url>http://www.idega.com/</url>
+    </dependency>
+    <dependency>
+      <groupId>bundles</groupId>
+      <artifactId>is.idega.idegaweb.egov.citizen</artifactId>
+      <version>1.0.13</version>
+      <type>jar</type>
+      <url>http://www.idega.com/</url>
+      <properties>
+        <eclipse.dependency>true</eclipse.dependency>
+      </properties>      
+    </dependency>
+  </dependencies>
+</project>
