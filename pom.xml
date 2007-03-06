@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- $Id: pom.xml,v 1.1 2007/03/06 23:29:40 tryggvil Exp $ -->
+<!-- $Id: pom.xml,v 1.2 2007/03/06 23:31:45 tryggvil Exp $ -->
 <project xmlns="http://maven.apache.org/POM/4.0.0"
   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
@@ -9,8 +9,7 @@
   <artifactId>is.idega.block.pki</artifactId>
   <packaging>jar</packaging>
   <version>3.5.0</version>
-  <inceptionYear>2000</inceptionYear>
-  <description>Puplic Key Infrastructure - for login and signing contracts</description>
+  <inceptionYear>2007</inceptionYear>
   <parent>
     <groupId>com.idega.block.platform</groupId>
     <artifactId>com.idega.block.base</artifactId>
@@ -24,27 +23,6 @@
       <organization>idega software</organization>
       <roles/>
     </developer>
-    <developer>
-      <name>Pall Helgason</name>
-      <id>palli</id>
-      <email>palli@idega.is</email>
-      <organization>idega software</organization>
-      <roles/>
-    </developer>
-    <developer>
-      <name>Eirikur Sveinn Hrafnsson</name>
-      <id>eiki</id>
-      <email>eiki@idega.is</email>
-      <organization>idega software</organization>
-      <roles/>
-    </developer>
-    <developer>
-      <name>Thorhallur Helgason</name>
-      <id>laddi</id>
-      <email>laddi@idega.is</email>
-      <organization>idega software</organization>
-      <roles/>
-    </developer>
   </developers>
   <dependencies>
     <dependency>
@@ -53,12 +31,6 @@
       <version>3.5.0</version>
       <type>jar</type>
      </dependency>
-     <dependency>
-      <groupId>nexus-pki</groupId>
-      <artifactId>nbs-server</artifactId>
-      <version>1.1.3</version>
-      <type>jar</type>
-    </dependency>
     <dependency>
       <groupId>com.idega.block.platform</groupId>
       <artifactId>com.idega.block.login</artifactId>
