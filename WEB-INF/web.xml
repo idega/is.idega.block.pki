@@ -13,7 +13,19 @@
   
   <filter-mapping>
   	<filter-name>PKIServletFilter</filter-name>
+  	<url-pattern>/pkiauth</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+  	<filter-name>PKIServletFilter</filter-name>
+  	<url-pattern>/pkiauth/</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+  	<filter-name>PKIServletFilter</filter-name>
   	<url-pattern>/pkiauth*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+  	<filter-name>PKIServletFilter</filter-name>
+  	<url-pattern>/pkiauth/*</url-pattern>
   </filter-mapping>
   
 </web-app>
