@@ -1,13 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
 <document>
   <properties>
     <title>changes</title>
     <author email="tryggvi@idega.com">Tryggvi Larusson</author>
   </properties>
   <body>
-    	<release version="1.0" date="??">
-      <action dev="tryggvil" type="update">
-      </action>              
+    <release version="1.0.0" date="2007-03-06">
+      <action dev="tryggvil" type="update"></action>
     </release>
-
   </body>
 </document>

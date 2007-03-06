@@ -5,7 +5,7 @@
   <pomVersion>3</pomVersion>
   <name>Icelandic Public Key Infrastructure Module</name>
   <artifactId>is.idega.block.pki</artifactId>
-  <currentVersion>1.0</currentVersion>
+  <currentVersion>1.0.0</currentVersion>
   <inceptionYear>2007</inceptionYear>
   <shortDescription>Public Key Infrastructure - for authentication with private certificates</shortDescription>
   <branches/>
@@ -44,7 +44,14 @@
       <url>http://www.idega.com/</url>
       <properties>
         <eclipse.dependency>true</eclipse.dependency>
-      </properties>      
+      </properties>
     </dependency>
   </dependencies>
+  <versions>
+    <version>
+      <id>1.0.0</id>
+      <name>1.0.0</name>
+      <tag>IS_PKI_1_0_0</tag>
+    </version>
+  </versions>
 </project>
