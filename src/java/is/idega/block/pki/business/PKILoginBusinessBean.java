@@ -11,7 +11,6 @@ import java.util.Iterator;
 import javax.ejb.FinderException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import com.idega.core.accesscontrol.business.LoggedOnInfo;
 import com.idega.core.accesscontrol.business.LoginBusinessBean;
 import com.idega.core.accesscontrol.business.LoginCreateException;
 import com.idega.core.accesscontrol.business.LoginDBHandler;
@@ -20,7 +19,6 @@ import com.idega.core.accesscontrol.data.LoginTableHome;
 import com.idega.data.IDOLookup;
 import com.idega.data.IDOLookupException;
 import com.idega.idegaweb.IWApplicationContext;
-import com.idega.idegaweb.IWBundle;
 import com.idega.idegaweb.IWException;
 import com.idega.idegaweb.IWMainApplication;
 import com.idega.user.data.User;
@@ -32,7 +30,7 @@ import com.idega.util.StringHandler;
  */
 public class PKILoginBusinessBean extends LoginBusinessBean {
 
-	private final static String IW_BUNDLE_IDENTIFIER = "is.idega.block.pki";
+	//private final static String IW_BUNDLE_IDENTIFIER = "is.idega.block.pki";
 	public final static String PKI_LOGIN_TYPE = "is-pki-stjr";
 	//public final static String PKI_NBSEXCEPTION = "se-pki-nexus-nbsexception";
 	//public final static String PKI_EXCEPTION = "se-pki-nexus-exception";
@@ -149,7 +147,8 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 			if(mayCreateNewLogin){
 			//if (loginRecords.length > 0) {
 				String newLogin = StringHandler.getRandomString(20);
-				chosenRecord = LoginDBHandler.createLogin(user.getID(), newLogin, "noPassword");
+				Integer userId = (Integer)user.getPrimaryKey();
+				chosenRecord = LoginDBHandler.createLogin(userId.intValue(), newLogin, "noPassword");
 				chosenRecord.setLoginType(PKILoginBusinessBean.PKI_LOGIN_TYPE);
 				chosenRecord.store();
 				return chosenRecord;
@@ -247,12 +246,6 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 		return loginSuccessful;
 	}
 	*/
-
-	private IWBundle getBundle(IWApplicationContext iwac) {
-		return iwac.getIWMainApplication().getBundle(IW_BUNDLE_IDENTIFIER);
-	}
-
-
 
 
 	/*

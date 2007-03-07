@@ -1,13 +1,22 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
 <document>
   <properties>
     <title>changes</title>
     <author email="tryggvi@idega.com">Tryggvi Larusson</author>
   </properties>
   <body>
-    <release version="1.0.0" date="2007-03-06">
-      <action dev="tryggvil" type="update"></action>
+  
+	<release version="1.0.1" date="2007-03-07">
+		<action dev="tryggvil" type="update">
+			Added application property pki.pidpattern.dn that can be settable to find the PersonalId (kennitala) as a regular expression pattern.
+		</action>              
     </release>
+  
+  
+	<release version="1.0.0" date="2007-03-06">
+	      <action dev="tryggvil" type="update">
+	      		First working release with registration behaviour on first authentication.
+	      </action>              
+    </release>
+
   </body>
 </document>
