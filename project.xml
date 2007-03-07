@@ -5,7 +5,7 @@
   <pomVersion>3</pomVersion>
   <name>Icelandic Public Key Infrastructure Module</name>
   <artifactId>is.idega.block.pki</artifactId>
-  <currentVersion>1.0.0</currentVersion>
+  <currentVersion>1.0.1</currentVersion>
   <inceptionYear>2007</inceptionYear>
   <shortDescription>Public Key Infrastructure - for authentication with private certificates</shortDescription>
   <branches/>
@@ -52,6 +52,11 @@
       <id>1.0.0</id>
       <name>1.0.0</name>
       <tag>IS_PKI_1_0_0</tag>
+    </version>
+    <version>
+      <id>1.0.1</id>
+      <name>1.0.1</name>
+      <tag>IS_PKI_1_0_1</tag>
     </version>
   </versions>
 </project>
