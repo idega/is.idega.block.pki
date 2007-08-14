@@ -1,8 +1,10 @@
 package is.idega.block.pki.servlet;
-import is.idega.block.pki.business.PKILoginBusinessBean;
 import is.idega.block.pki.business.FirstCertificateAuthenticationException;
+import is.idega.block.pki.business.PKILoginBusinessBean;
 import is.idega.idegaweb.egov.citizen.presentation.CitizenAccountApplication;
+
 import java.io.IOException;
+
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
@@ -10,9 +12,11 @@ import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import com.idega.idegaweb.IWMainApplication;
 import com.idega.idegaweb.IWURL;
 import com.idega.servlet.filter.IWAuthenticator;
+import com.idega.util.RequestUtil;
 
 
 /**
@@ -22,10 +26,10 @@ import com.idega.servlet.filter.IWAuthenticator;
  * <p>
  * Servlet filter that authenticates a user into the idegaWeb User system by a PKI Certificate.
  * </p>
- *  Last modified: $Date: 2007/03/06 23:29:40 $ by $Author: tryggvil $
+ *  Last modified: $Date: 2007/08/14 12:39:01 $ by $Author: alexis $
  * 
  * @author <a href="mailto:tryggvil@idega.com">tryggvil</a>
- * @version $Revision: 1.1 $
+ * @version $Revision: 1.2 $
  */
 public class PKIServletFilter extends IWAuthenticator {
 
@@ -72,7 +76,7 @@ public class PKIServletFilter extends IWAuthenticator {
 			if(success){
 				//Redirect to the user home page:
 				boolean redirectToUserHomepage=true;
-				return processRedirects(request, response, request.getSession(), bean, redirectToUserHomepage);
+				return processRedirectsToUserHome(request, response, request.getSession(), bean, redirectToUserHomepage);
 			}
 			else{
 				response.sendError(500);
