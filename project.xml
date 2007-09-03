@@ -5,7 +5,7 @@
   <pomVersion>3</pomVersion>
   <name>Icelandic Public Key Infrastructure Module</name>
   <artifactId>is.idega.block.pki</artifactId>
-  <currentVersion>1.0.1</currentVersion>
+  <currentVersion>1.0.2</currentVersion>
   <inceptionYear>2007</inceptionYear>
   <shortDescription>Public Key Infrastructure - for authentication with private certificates</shortDescription>
   <branches/>
@@ -22,7 +22,7 @@
     <dependency>
       <groupId>bundles</groupId>
       <artifactId>com.idega.core</artifactId>
-      <version>3.1.39</version>
+      <version>3.1.62</version>
       <type>jar</type>
       <url>http://www.idega.com/</url>
       <properties>
@@ -39,7 +39,7 @@
     <dependency>
       <groupId>bundles</groupId>
       <artifactId>is.idega.idegaweb.egov.citizen</artifactId>
-      <version>1.0.13</version>
+      <version>1.0.21</version>
       <type>jar</type>
       <url>http://www.idega.com/</url>
       <properties>
