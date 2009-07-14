@@ -16,7 +16,6 @@ import javax.servlet.http.HttpServletResponse;
 import com.idega.idegaweb.IWMainApplication;
 import com.idega.idegaweb.IWURL;
 import com.idega.servlet.filter.IWAuthenticator;
-import com.idega.util.RequestUtil;
 
 
 /**
@@ -26,10 +25,10 @@ import com.idega.util.RequestUtil;
  * <p>
  * Servlet filter that authenticates a user into the idegaWeb User system by a PKI Certificate.
  * </p>
- *  Last modified: $Date: 2007/08/14 12:39:01 $ by $Author: alexis $
+ *  Last modified: $Date: 2009/07/14 17:39:59 $ by $Author: eiki $
  * 
  * @author <a href="mailto:tryggvil@idega.com">tryggvil</a>
- * @version $Revision: 1.2 $
+ * @version $Revision: 1.3 $
  */
 public class PKIServletFilter extends IWAuthenticator {
 
@@ -74,9 +73,7 @@ public class PKIServletFilter extends IWAuthenticator {
 		try{
 			success = bean.logInByCertificate(request);
 			if(success){
-				//Redirect to the user home page:
-				boolean redirectToUserHomepage=true;
-				return processRedirectsToUserHome(request, response, request.getSession(), bean, redirectToUserHomepage);
+				return redirectToUserHomepage(request, response, bean);
 			}
 			else{
 				response.sendError(500);
