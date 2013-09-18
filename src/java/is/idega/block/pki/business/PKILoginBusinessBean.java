@@ -8,9 +8,11 @@ package is.idega.block.pki.business;
 
 import java.util.Collection;
 import java.util.Iterator;
+
 import javax.ejb.FinderException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
 import com.idega.core.accesscontrol.business.LoginBusinessBean;
 import com.idega.core.accesscontrol.business.LoginCreateException;
 import com.idega.core.accesscontrol.business.LoginDBHandler;
@@ -26,7 +28,7 @@ import com.idega.util.StringHandler;
 
 /**
  * @author <a href="mailto:tryggvi@idega.is">Tryggvi Larusson</a>
- * 
+ *
  */
 public class PKILoginBusinessBean extends LoginBusinessBean {
 
@@ -40,12 +42,12 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 
 	//private final static String NBS_BANKID_LOGIN_RESULT = "nbs_bankid_login_result";
 	private final static String PKI_LOGGEDONINFO = "is_pki_loggedoninfo";
-	
+
 	/** Names for objects stored in the servlet context or session. */
 	//private final static String SERVER_FACTORY = "se.idega.block.pki.ServerFactory", SERVER = "se.idega.block.pki.Server", SERVLET_URI = "se.nexus.cbt.ServletURI";
 
 	/**
-	 * 
+	 *
 	 */
 	public PKILoginBusinessBean() {
 		super();
@@ -55,8 +57,9 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 	 * This method is invoked by the IWAuthenticator and tries to log in or log
 	 * out the user depending on the request parameters.
 	 */
+	@Override
 	public boolean processRequest(HttpServletRequest request) throws IWException {
-		
+
 		if(!isLoggedOn(request)){
 			try {
 				return logInByCertificate(request);
@@ -66,10 +69,10 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 				e.printStackTrace();
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/*
 	public boolean actionPerformed(IWContext iwc) {
 		NBSResult result = null;
@@ -94,7 +97,7 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 					info.setNbsAuthResult((NBSAuthResult)result);
 					this.setBankIDLoggedOnInfo(iwc, info);
 					logInUser(iwc, result);
-					
+
 					break;
 				case (NBSResult.TYPE_SIGN) :
 					throw new Exception("Unexpected result: NBSResult = TYPE_SIGN");
@@ -117,7 +120,7 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 		return true;
 	}
 	*/
-	
+
 	/**
 	 * if requireExisitingLogin is true then this method throws an exception if the user hasn't already gotten a login, otherwise it will create a new bankId login
 	 * @return LoginTable record to log on the system
@@ -143,7 +146,7 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 					mayCreateNewLogin=true;
 				}
 			}
-			
+
 			if(mayCreateNewLogin){
 			//if (loginRecords.length > 0) {
 				String newLogin = StringHandler.getRandomString(20);
@@ -170,8 +173,8 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 			return chosenRecord;
 		}
 	}
-	
-	
+
+
 	public boolean logInByCertificate(HttpServletRequest request) throws Exception{
 		boolean loginSuccessful = false;
 		PKICertificateInfo lInfo = createLoggedOnInfo(request);
@@ -184,10 +187,10 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 			if (!loginSuccessful) {
 				throw new FirstCertificateAuthenticationException(IWEX_USER_HAS_NO_ACCOUNT,personalID);
 			}
-			
+
 			/*if (iwc.isParameterSet(IWAuthenticator.PARAMETER_REDIRECT_USER_TO_PRIMARY_GROUP_HOME_PAGE)){
 				if(iwc.isLoggedOn()||LoginBusinessBean.isLogOnAction(iwc)) {
-					Group prmg = iwc.getCurrentUser().getPrimaryGroup(); 
+					Group prmg = iwc.getCurrentUser().getPrimaryGroup();
 					if (prmg != null) {
 						int homePageID = prmg.getHomePageID();
 						if (homePageID > 0) {
@@ -198,7 +201,7 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 					}
 				}
 			}*/
-			
+
 		/*} catch (Exception ex) {
 			this.carryOnException(request, ex);
 			//System.out.println("idegaWeb Login failed for personalId : '" + personalID + "'");
@@ -222,10 +225,10 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 			if (!loginSuccessful) {
 				throw new Exception(IWEX_PKI_USR_NOT_REGISTERED + "#" + personalID + "#");
 			}
-			
+
 			if (iwc.isParameterSet(IWAuthenticator.PARAMETER_REDIRECT_USER_TO_PRIMARY_GROUP_HOME_PAGE)){
 				if(iwc.isLoggedOn()||LoginBusinessBean.isLogOnAction(iwc)) {
-					Group prmg = iwc.getCurrentUser().getPrimaryGroup(); 
+					Group prmg = iwc.getCurrentUser().getPrimaryGroup();
 					if (prmg != null) {
 						int homePageID = prmg.getHomePageID();
 						if (homePageID > 0) {
@@ -236,7 +239,7 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 					}
 				}
 			}
-			
+
 		} catch (Exception ex) {
 			this.carryOnException(iwc, ex);
 			//System.out.println("idegaWeb Login failed for personalId : '" + personalID + "'");
@@ -262,16 +265,16 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 		return info;
 	}
 
-	
+
 	/*public LoggedOnInfo getLoggedOnInfo(HttpSession session) {
 		return (PKICertificateLoggedOnInfo)session.getAttribute(PKI_LOGGEDONINFO);
 	}*/
-	
+
 	public PKICertificateInfo getPKILoggedOnInfo(HttpSession session) {
 		//return (PKICertificateLoggedOnInfo)getLoggedOnInfo(session);
 		return (PKICertificateInfo)session.getAttribute(PKI_LOGGEDONINFO);
 	}
-	
+
 	/*public LoggedOnInfo getPKILoggedOnInfo(HttpSession session) {
 		return (LoggedOnInfo)session.getAttribute(PKI_LOGGEDONINFO);
 	}*/
@@ -279,13 +282,13 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 	public void setPKILoggedOnInfo(PKICertificateInfo info, HttpSession session) {
 		session.setAttribute(PKI_LOGGEDONINFO, info);
 	}
-	
+
 	public void logOutPKI(HttpServletRequest request) {
 		request.getSession().removeAttribute(PKI_LOGGEDONINFO);
 	}
 
 	public void logOut(HttpServletRequest request) throws Exception {
-		super.logOut(request);
+		super.logOut(request, null);
 		this.logOutPKI(request);
 	}
 
@@ -293,17 +296,18 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 	 * temp: same implementation as in superclass
 	 * This method by default throws an exception if the user hasn't already gotten a login.
 	 */
+	@Override
 	public boolean logInByPersonalID(HttpServletRequest request, String personalID) throws Exception {
 		return logInByPersonalID(request,personalID,true);
 	}
-	
+
 	/**
 	 * if requireExisitingLogin is true then this method throws an exception if the user hasn't already gotten a login.
 	 */
 	public boolean logInByPersonalID(HttpServletRequest request, String personalID,boolean requireExistingLogin) throws Exception {
 		boolean returner = false;
 		try {
-			
+
 			IWApplicationContext iwc = IWMainApplication.getIWMainApplication(request.getSession().getServletContext()).getIWApplicationContext();
 			com.idega.user.data.User user = getUserBusiness(iwc).getUser(personalID);
 			//LoginTable[] login_table = (LoginTable[]) (com.idega.core.accesscontrol.data.LoginTableBMPBean.getStaticInstance()).findAllByColumn(com.idega.core.accesscontrol.data.LoginTableBMPBean.getColumnNameUserID(), user.getPrimaryKey().toString());
@@ -341,7 +345,7 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 	public boolean hasPKILogin(User user){
 		try {
 			Collection loginRecords = ((LoginTableHome)IDOLookup.getHome(LoginTable.class)).findLoginsForUser(user);
-			
+
 			for (Iterator iter = loginRecords.iterator(); iter.hasNext();) {
 				String type = ((LoginTable)iter.next()).getLoginType();
 				if (type != null && type.equals(PKI_LOGIN_TYPE)) {
@@ -355,9 +359,9 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 			e.printStackTrace();
 			return false;
 		}
-		
+
 		//LoginTable[] loginRecords = (LoginTable[]) (com.idega.core.accesscontrol.data.LoginTableBMPBean.getStaticInstance()).findAllByColumn(com.idega.core.accesscontrol.data.LoginTableBMPBean.getColumnNameUserID(), Integer.toString(userID));
-		
+
 //		if (loginRecords != null) {
 //			for (int i = 0; i < loginRecords.length; i++) {
 //				String type = loginRecords[i].getLoginType();
