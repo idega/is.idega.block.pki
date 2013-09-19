@@ -16,8 +16,10 @@ import javax.servlet.http.HttpSession;
 import com.idega.core.accesscontrol.business.LoginBusinessBean;
 import com.idega.core.accesscontrol.business.LoginCreateException;
 import com.idega.core.accesscontrol.business.LoginDBHandler;
+import com.idega.core.accesscontrol.dao.UserLoginDAO;
 import com.idega.core.accesscontrol.data.LoginTable;
 import com.idega.core.accesscontrol.data.LoginTableHome;
+import com.idega.core.accesscontrol.data.bean.UserLogin;
 import com.idega.data.IDOLookup;
 import com.idega.data.IDOLookupException;
 import com.idega.idegaweb.IWApplicationContext;
@@ -25,6 +27,7 @@ import com.idega.idegaweb.IWException;
 import com.idega.idegaweb.IWMainApplication;
 import com.idega.user.data.User;
 import com.idega.util.StringHandler;
+import com.idega.util.expression.ELUtil;
 
 /**
  * @author <a href="mailto:tryggvi@idega.is">Tryggvi Larusson</a>
@@ -287,8 +290,9 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 		request.getSession().removeAttribute(PKI_LOGGEDONINFO);
 	}
 
+	@Override
 	public void logOut(HttpServletRequest request) throws Exception {
-		super.logOut(request, null);
+		super.logOut(request);
 		this.logOutPKI(request);
 	}
 
@@ -318,7 +322,9 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 
 			LoginTable lTable = this.chooseLoginRecord(request, login_table, user,requireExistingLogin);
 			if (lTable != null) {
-				returner = logIn(request, lTable);
+				UserLoginDAO userLoginDAO = ELUtil.getInstance().getBean(UserLoginDAO.class);
+				UserLogin userLogin = userLoginDAO.findLogin(Integer.valueOf(lTable.getPrimaryKey().toString()));
+				returner = logIn(request, userLogin);
 				if (returner) {
 					onLoginSuccessful(request);
 				}
