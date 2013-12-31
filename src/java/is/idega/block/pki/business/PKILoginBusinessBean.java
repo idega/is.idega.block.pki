@@ -291,8 +291,8 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 	}
 
 	@Override
-	public void logOut(HttpServletRequest request) throws Exception {
-		super.logOut(request);
+	public void logOut(HttpServletRequest request, String userName) throws Exception {
+		super.logOut(request, userName);
 		this.logOutPKI(request);
 	}
 
@@ -316,8 +316,8 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 			com.idega.user.data.User user = getUserBusiness(iwc).getUser(personalID);
 			//LoginTable[] login_table = (LoginTable[]) (com.idega.core.accesscontrol.data.LoginTableBMPBean.getStaticInstance()).findAllByColumn(com.idega.core.accesscontrol.data.LoginTableBMPBean.getColumnNameUserID(), user.getPrimaryKey().toString());
 
-			Collection loginRecords = ((LoginTableHome)IDOLookup.getHome(LoginTable.class)).findLoginsForUser(user);
-			LoginTable[] login_table = (LoginTable[])loginRecords.toArray(new LoginTable[loginRecords.size()]);
+			Collection<LoginTable> loginRecords = ((LoginTableHome)IDOLookup.getHome(LoginTable.class)).findLoginsForUser(user);
+			LoginTable[] login_table = loginRecords.toArray(new LoginTable[loginRecords.size()]);
 
 
 			LoginTable lTable = this.chooseLoginRecord(request, login_table, user,requireExistingLogin);
@@ -350,10 +350,10 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 
 	public boolean hasPKILogin(User user){
 		try {
-			Collection loginRecords = ((LoginTableHome)IDOLookup.getHome(LoginTable.class)).findLoginsForUser(user);
+			Collection<LoginTable> loginRecords = ((LoginTableHome)IDOLookup.getHome(LoginTable.class)).findLoginsForUser(user);
 
-			for (Iterator iter = loginRecords.iterator(); iter.hasNext();) {
-				String type = ((LoginTable)iter.next()).getLoginType();
+			for (Iterator<LoginTable> iter = loginRecords.iterator(); iter.hasNext();) {
+				String type = iter.next().getLoginType();
 				if (type != null && type.equals(PKI_LOGIN_TYPE)) {
 					return true;
 				}
