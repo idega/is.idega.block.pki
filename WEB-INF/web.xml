@@ -10,19 +10,19 @@ http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
   
   <filter-mapping>
   	<filter-name>PKIServletFilter</filter-name>
-  	<url-pattern>/pkiauth</url-pattern>
+  	<url-pattern>/pki-authorization</url-pattern>
   </filter-mapping>
   <filter-mapping>
   	<filter-name>PKIServletFilter</filter-name>
-  	<url-pattern>/pkiauth/</url-pattern>
+  	<url-pattern>/pki-authorization/</url-pattern>
   </filter-mapping>
   <filter-mapping>
   	<filter-name>PKIServletFilter</filter-name>
-  	<url-pattern>/pkiauth*</url-pattern>
+  	<url-pattern>/pki-authorization*</url-pattern>
   </filter-mapping>
   <filter-mapping>
   	<filter-name>PKIServletFilter</filter-name>
-  	<url-pattern>/pkiauth/*</url-pattern>
+  	<url-pattern>/pki-authorization/*</url-pattern>
   </filter-mapping>
   
 </web-app>

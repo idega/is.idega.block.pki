@@ -1,0 +1,10 @@
+<urlrewrite use-query-string="true">
+
+	<rule>
+	    <from>/pkiauth</from>
+	    <to type="forward" last="true">/pki-authorization</to>
+	</rule>
+
+
+
+</urlrewrite>
