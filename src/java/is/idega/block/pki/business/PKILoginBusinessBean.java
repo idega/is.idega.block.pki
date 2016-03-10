@@ -326,7 +326,7 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 				UserLogin userLogin = userLoginDAO.findLogin(Integer.valueOf(lTable.getPrimaryKey().toString()));
 				returner = logIn(request, userLogin);
 				if (returner) {
-					onLoginSuccessful(request);
+					onLoginSuccessful(request, userLogin.getUserLogin(), userLogin.getUserPassword());
 				}
 			} else {
 				try {
