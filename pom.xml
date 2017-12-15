@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <parent>
     <groupId>com.idega.block.private</groupId>
-    <artifactId>com.idega.block.private</artifactId>
+    <artifactId>com.idega.block.egov</artifactId>
     <version>5.0.0-SNAPSHOT</version>
   </parent>
   <name>idegaweb Public Key Infrastructure block</name>
