@@ -22,9 +22,8 @@ import com.idega.core.accesscontrol.data.LoginTableHome;
 import com.idega.core.accesscontrol.data.bean.UserLogin;
 import com.idega.data.IDOLookup;
 import com.idega.data.IDOLookupException;
-import com.idega.idegaweb.IWApplicationContext;
 import com.idega.idegaweb.IWException;
-import com.idega.idegaweb.IWMainApplication;
+import com.idega.presentation.IWContext;
 import com.idega.user.data.User;
 import com.idega.util.StringHandler;
 import com.idega.util.expression.ELUtil;
@@ -128,7 +127,7 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 	 * if requireExisitingLogin is true then this method throws an exception if the user hasn't already gotten a login, otherwise it will create a new bankId login
 	 * @return LoginTable record to log on the system
 	 */
-	public LoginTable chooseLoginRecord(HttpServletRequest request, LoginTable[] loginRecords, User user,boolean requireExisitingLogin) throws Exception {
+	private LoginTable chooseLoginRecord(IWContext iwc, LoginTable[] loginRecords, User user,boolean requireExisitingLogin) throws Exception {
 		LoginTable chosenRecord = null;
 		if (loginRecords != null) {
 			for (int i = 0; i < loginRecords.length; i++) {
@@ -154,7 +153,7 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 			//if (loginRecords.length > 0) {
 				String newLogin = StringHandler.getRandomString(20);
 				Integer userId = (Integer)user.getPrimaryKey();
-				chosenRecord = LoginDBHandler.createLogin(userId.intValue(), newLogin, "noPassword");
+				chosenRecord = LoginDBHandler.createLogin(iwc, userId.intValue(), newLogin, "noPassword");
 				chosenRecord.setLoginType(PKILoginBusinessBean.PKI_LOGIN_TYPE);
 				chosenRecord.store();
 				return chosenRecord;
@@ -177,14 +176,15 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 		}
 	}
 
-
 	public boolean logInByCertificate(HttpServletRequest request) throws Exception{
 		boolean loginSuccessful = false;
 		PKICertificateInfo lInfo = createLoggedOnInfo(request);
 
 		String personalID =  lInfo.getPersonalId();
 		//try {
-			loginSuccessful = this.logInByPersonalID(request, personalID);
+			IWContext iwc = new IWContext(request, null, request.getSession().getServletContext());
+
+			loginSuccessful = this.logInByPersonalID(iwc, personalID);
 
 			System.out.println("PKILoginBusinessBean logInByCertificate: " + ((loginSuccessful) ? "successful" : "failed") + " for personalId : '" + personalID + "'");
 			if (!loginSuccessful) {
@@ -301,18 +301,17 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 	 * This method by default throws an exception if the user hasn't already gotten a login.
 	 */
 	@Override
-	public boolean logInByPersonalID(HttpServletRequest request, String personalID) throws Exception {
-		return logInByPersonalID(request,personalID,true);
+	public boolean logInByPersonalID(IWContext iwc, String personalID) throws Exception {
+		return logInByPersonalID(iwc, personalID, true);
 	}
 
 	/**
 	 * if requireExisitingLogin is true then this method throws an exception if the user hasn't already gotten a login.
 	 */
-	public boolean logInByPersonalID(HttpServletRequest request, String personalID,boolean requireExistingLogin) throws Exception {
+	private boolean logInByPersonalID(IWContext iwc, String personalID,boolean requireExistingLogin) throws Exception {
 		boolean returner = false;
 		try {
 
-			IWApplicationContext iwc = IWMainApplication.getIWMainApplication(request.getSession().getServletContext()).getIWApplicationContext();
 			com.idega.user.data.User user = getUserBusiness(iwc).getUser(personalID);
 			//LoginTable[] login_table = (LoginTable[]) (com.idega.core.accesscontrol.data.LoginTableBMPBean.getStaticInstance()).findAllByColumn(com.idega.core.accesscontrol.data.LoginTableBMPBean.getColumnNameUserID(), user.getPrimaryKey().toString());
 
@@ -320,13 +319,13 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 			LoginTable[] login_table = loginRecords.toArray(new LoginTable[loginRecords.size()]);
 
 
-			LoginTable lTable = this.chooseLoginRecord(request, login_table, user,requireExistingLogin);
+			LoginTable lTable = this.chooseLoginRecord(iwc, login_table, user,requireExistingLogin);
 			if (lTable != null) {
 				UserLoginDAO userLoginDAO = ELUtil.getInstance().getBean(UserLoginDAO.class);
 				UserLogin userLogin = userLoginDAO.findLogin(Integer.valueOf(lTable.getPrimaryKey().toString()));
-				returner = logIn(request, userLogin);
+				returner = logIn(iwc.getRequest(), userLogin);
 				if (returner) {
-					onLoginSuccessful(request, userLogin.getUserLogin(), userLogin.getUserPassword());
+					onLoginSuccessful(iwc.getRequest(), userLogin.getUserLogin(), userLogin.getUserPassword());
 				}
 			} else {
 				try {
