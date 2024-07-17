@@ -60,8 +60,8 @@ public class PKILoginBusinessBean extends LoginBusinessBean {
 	 * out the user depending on the request parameters.
 	 */
 	@Override
-	public boolean processRequest(HttpServletRequest request) throws IWException {
-
+	public boolean processRequest(IWContext context) throws IWException {
+		HttpServletRequest request = context.getRequest();
 		if(!isLoggedOn(request)){
 			try {
 				return logInByCertificate(request);
